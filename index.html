@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Print</title>
 
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .app {
+      max-width: 500px;
+      margin: auto;
+      padding: 25px 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input, select, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    input, select {
+      border: 1px solid #ccc;
+      background: white;
+    }
+
+    button {
+      margin-top: 25px;
+      border: none;
+      background: #111827;
+      color: white;
+      font-weight: bold;
+    }
+
+    #result {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: #e8f5e9;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+  <div class="card">
+
+    <h1>🖨️ QR Print</h1>
+
+    <div class="subtitle">
+      Upload your document and create a print order
+    </div>
+
+    <label>Select Document</label>
+    <input type="file" id="document" accept=".pdf,.jpg,.jpeg,.png">
+
+    <label>Print Type</label>
+    <select id="printType">
+      <option value="bw">Black & White</option>
+      <option value="color">Color</option>
+    </select>
+
+    <label>Number of Copies</label>
+    <input type="number" id="copies" value="1" min="1">
+
+    <button onclick="createOrder()">Create Print Order</button>
+
+    <div id="result"></div>
+
+  </div>
+</div>
+
+<script>
+function createOrder() {
+
+  const file = document.getElementById("document").files[0];
+  const copies = document.getElementById("copies").value;
+  const type = document.getElementById("printType").value;
+  const result = document.getElementById("result");
+
+  if (!file) {
+    alert("Please select a document first.");
+    return;
+  }
+
+  result.style.display = "block";
+
+  result.innerHTML =
+    "<strong>✅ Print Order Created</strong><br><br>" +
+    "Document: " + file.name + "<br>" +
+    "Copies: " + copies + "<br>" +
+    "Type: " + (type === "bw" ? "Black & White" : "Color") +
+    "<br><br>Payment and automatic printing will be added next.";
+}
+</script>
+
+</body>
+</html>
