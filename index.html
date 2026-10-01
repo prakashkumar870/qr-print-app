@@ -1,133 +1,376 @@
 <!DOCTYPE html>
 <html lang="hi">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR Print</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
+<meta charset="UTF-8">
 
-    .app {
-      max-width: 500px;
-      margin: auto;
-      padding: 25px 18px;
-    }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    }
+<title>QR Print</title>
 
-    h1 {
-      margin-top: 0;
-      text-align: center;
-    }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
-    }
+<style>
 
-    label {
-      display: block;
-      margin-top: 18px;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
 
-    input, select, button {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 16px;
-    }
+.app {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px 15px;
+}
 
-    input, select {
-      border: 1px solid #ccc;
-      background: white;
-    }
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom: 18px;
+}
 
-    button {
-      margin-top: 25px;
-      border: none;
-      background: #111827;
-      color: white;
-      font-weight: bold;
-    }
+h1 {
+    margin-top: 0;
+    text-align: center;
+}
 
-    #result {
-      display: none;
-      margin-top: 20px;
-      padding: 15px;
-      background: #e8f5e9;
-      border-radius: 10px;
-    }
-  </style>
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input,
+select,
+button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+input,
+select {
+    border: 1px solid #ccc;
+    background: white;
+}
+
+button {
+    margin-top: 20px;
+    border: none;
+    background: #111827;
+    color: white;
+    font-weight: bold;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.printer-box {
+    text-align: center;
+    background: #eef7ff;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.printer-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.printer-id {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+#qrcode {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.qr-info {
+    font-size: 13px;
+    color: #666;
+    word-break: break-all;
+}
+
+#result {
+    display: none;
+    margin-top: 20px;
+    padding: 16px;
+    background: #e8f5e9;
+    border-radius: 12px;
+    line-height: 1.7;
+}
+
+.order-id {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.small {
+    font-size: 13px;
+    color: #666;
+    margin-top: 10px;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
 <div class="app">
-  <div class="card">
 
-    <h1>🖨️ QR Print</h1>
+    <div class="card">
 
-    <div class="subtitle">
-      Upload your document and create a print order
+        <h1>🖨️ QR Print</h1>
+
+        <div class="subtitle">
+            Upload your document and create a print order
+        </div>
+
+
+        <!-- PRINTER INFORMATION -->
+
+        <div class="printer-box">
+
+            <div class="printer-name">
+                🖨️ Printer 1
+            </div>
+
+            <div class="printer-id">
+                Printer ID: <strong id="printerId">PRINTER-1</strong>
+            </div>
+
+            <div id="qrcode"></div>
+
+            <div class="qr-info">
+                इस QR को scan करने पर Printer 1 का print page खुलेगा।
+            </div>
+
+        </div>
+
+
+        <!-- DOCUMENT -->
+
+        <label>Select Document</label>
+
+        <input
+            type="file"
+            id="document"
+            accept=".pdf,.jpg,.jpeg,.png"
+        >
+
+
+        <!-- PRINT TYPE -->
+
+        <label>Print Type</label>
+
+        <select id="printType">
+
+            <option value="bw">
+                Black & White
+            </option>
+
+            <option value="color">
+                Color
+            </option>
+
+        </select>
+
+
+        <!-- COPIES -->
+
+        <label>Number of Copies</label>
+
+        <input
+            type="number"
+            id="copies"
+            value="1"
+            min="1"
+        >
+
+
+        <!-- CREATE ORDER -->
+
+        <button onclick="createOrder()">
+            Create Print Order
+        </button>
+
+
+        <!-- RESULT -->
+
+        <div id="result"></div>
+
     </div>
 
-    <label>Select Document</label>
-    <input type="file" id="document" accept=".pdf,.jpg,.jpeg,.png">
 
-    <label>Print Type</label>
-    <select id="printType">
-      <option value="bw">Black & White</option>
-      <option value="color">Color</option>
-    </select>
+    <div class="card">
 
-    <label>Number of Copies</label>
-    <input type="number" id="copies" value="1" min="1">
+        <strong>📌 Printer Information</strong>
 
-    <button onclick="createOrder()">Create Print Order</button>
+        <div class="small">
+            यह अभी पहला version है। QR से Printer 1 की पहचान होगी।
+            आगे इसी system में payment, online order और automatic
+            printer connection जोड़ा जाएगा।
+        </div>
 
-    <div id="result"></div>
+    </div>
 
-  </div>
 </div>
 
+
 <script>
+
+
+/* -------------------------------
+   PRINTER SYSTEM
+-------------------------------- */
+
+const params = new URLSearchParams(window.location.search);
+
+const printer = params.get("printer") || "1";
+
+document.getElementById("printerId").innerText =
+    "PRINTER-" + printer;
+
+
+/* -------------------------------
+   QR CODE
+-------------------------------- */
+
+const qrUrl =
+    window.location.origin +
+    window.location.pathname +
+    "?printer=" + printer;
+
+new QRCode(document.getElementById("qrcode"), {
+
+    text: qrUrl,
+
+    width: 180,
+
+    height: 180
+
+});
+
+
+/* -------------------------------
+   ORDER CREATION
+-------------------------------- */
+
 function createOrder() {
 
-  const file = document.getElementById("document").files[0];
-  const copies = document.getElementById("copies").value;
-  const type = document.getElementById("printType").value;
-  const result = document.getElementById("result");
+    const file =
+        document.getElementById("document").files[0];
 
-  if (!file) {
-    alert("Please select a document first.");
-    return;
-  }
+    const copies =
+        document.getElementById("copies").value;
 
-  result.style.display = "block";
+    const type =
+        document.getElementById("printType").value;
 
-  result.innerHTML =
-    "<strong>✅ Print Order Created</strong><br><br>" +
-    "Document: " + file.name + "<br>" +
-    "Copies: " + copies + "<br>" +
-    "Type: " + (type === "bw" ? "Black & White" : "Color") +
-    "<br><br>Payment and automatic printing will be added next.";
+    const result =
+        document.getElementById("result");
+
+
+    if (!file) {
+
+        alert("Please select a document first.");
+
+        return;
+
+    }
+
+
+    if (copies < 1) {
+
+        alert("Copies कम से कम 1 होनी चाहिए।");
+
+        return;
+
+    }
+
+
+    /* CREATE ORDER ID */
+
+    const orderId =
+        "QP-" +
+        Date.now().toString().slice(-8);
+
+
+    const printType =
+        type === "bw"
+        ? "Black & White"
+        : "Color";
+
+
+    result.style.display = "block";
+
+
+    result.innerHTML =
+
+        "<div class='order-id'>✅ Print Order Created</div>" +
+
+        "<br>" +
+
+        "<strong>Order ID:</strong> " +
+        orderId +
+
+        "<br>" +
+
+        "<strong>Printer:</strong> " +
+        "PRINTER-" + printer +
+
+        "<br>" +
+
+        "<strong>Document:</strong> " +
+        file.name +
+
+        "<br>" +
+
+        "<strong>Copies:</strong> " +
+        copies +
+
+        "<br>" +
+
+        "<strong>Print Type:</strong> " +
+        printType +
+
+        "<br><br>" +
+
+        "🟢 Order received for Printer-" +
+        printer +
+
+        "<div class='small'>" +
+
+        "Payment और automatic printing अगले चरण में जोड़े जाएंगे।" +
+
+        "</div>";
+
 }
+
+
 </script>
 
 </body>
+
 </html>
