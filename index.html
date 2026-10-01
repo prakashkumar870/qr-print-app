@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html lang="hi">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>QR Print</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 <style>
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f4f6f8;
+    background: #f3f6f8;
     color: #222;
 }
 
 .app {
-    max-width: 500px;
+    max-width: 520px;
     margin: auto;
-    padding: 20px 15px;
+    padding: 18px;
 }
 
 .card {
     background: white;
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 22px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
 }
 
 h1 {
-    margin-top: 0;
     text-align: center;
+    margin: 5px 0 8px;
 }
 
 .subtitle {
@@ -45,242 +43,547 @@ h1 {
     margin-bottom: 20px;
 }
 
-label {
-    display: block;
-    margin-top: 18px;
-    margin-bottom: 8px;
+h2 {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.option {
+    width: 100%;
+    padding: 18px;
+    margin: 8px 0;
+    border: 2px solid #ddd;
+    border-radius: 14px;
+    background: white;
+    font-size: 17px;
+    text-align: left;
     font-weight: bold;
 }
 
-input,
-select,
-button {
+.option.active {
+    border-color: #111827;
+    background: #f0f3f7;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin: 18px 0 8px;
+}
+
+.upload-box {
+    border: 2px dashed #bbb;
+    border-radius: 15px;
+    padding: 18px;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.camera-btn,
+.gallery-btn,
+.main-btn,
+.back-btn {
     width: 100%;
-    box-sizing: border-box;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.camera-btn {
+    background: #111827;
+    color: white;
+}
+
+.gallery-btn {
+    background: #e9edf2;
+    color: #222;
+}
+
+.main-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.back-btn {
+    background: #e5e7eb;
+    color: #222;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.preview-box {
+    display: none;
+    margin-top: 18px;
+    text-align: center;
+}
+
+.preview-box img {
+    max-width: 100%;
+    max-height: 350px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+.preview-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+select,
+.number-input {
+    width: 100%;
     padding: 14px;
+    border: 1px solid #ccc;
     border-radius: 10px;
     font-size: 16px;
 }
 
-input,
-select {
-    border: 1px solid #ccc;
-    background: white;
+.qty {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-button {
-    margin-top: 20px;
+.qty button {
+    width: 55px;
+    height: 50px;
     border: none;
-    background: #111827;
-    color: white;
-    font-weight: bold;
+    border-radius: 10px;
+    font-size: 25px;
+    background: #e5e7eb;
 }
 
-button:active {
-    transform: scale(0.98);
+.qty input {
+    flex: 1;
+    text-align: center;
+    font-size: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
 
-.printer-box {
+.hidden {
+    display: none;
+}
+
+.printer-info {
     text-align: center;
     background: #eef7ff;
-    border-radius: 14px;
-    padding: 18px;
-}
-
-.printer-name {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.printer-id {
-    color: #555;
+    padding: 12px;
+    border-radius: 12px;
     margin-bottom: 15px;
-}
-
-#qrcode {
-    display: flex;
-    justify-content: center;
-    margin: 15px 0;
-}
-
-.qr-info {
-    font-size: 13px;
-    color: #666;
-    word-break: break-all;
 }
 
 #result {
     display: none;
-    margin-top: 20px;
-    padding: 16px;
+    margin-top: 18px;
     background: #e8f5e9;
+    padding: 16px;
     border-radius: 12px;
     line-height: 1.7;
 }
-
-.order-id {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.small {
-    font-size: 13px;
-    color: #666;
-    margin-top: 10px;
-}
-
 </style>
-
 </head>
-
 
 <body>
 
 <div class="app">
 
-    <div class="card">
+<div class="card">
 
-        <h1>🖨️ QR Print</h1>
+<h1>🖨️ QR Print</h1>
 
-        <div class="subtitle">
-            Upload your document and create a print order
-        </div>
+<div class="subtitle">
+आसानी से अपना कागज Print करवाएँ
+</div>
 
+<div class="printer-info">
+🖨️ <strong>Printer 1</strong><br>
+Printer ID: PRINTER-1
+</div>
 
-        <!-- PRINTER INFORMATION -->
+<h2>आप क्या Print करवाना चाहते हैं?</h2>
 
-        <div class="printer-box">
+<button class="option active" id="singleBtn"
+onclick="selectType('single')">
+📄 एक कागज / Document
+</button>
 
-            <div class="printer-name">
-                🖨️ Printer 1
-            </div>
+<button class="option" id="frontBackBtn"
+onclick="selectType('frontback')">
+🪪 Front + Back एक ही Paper पर
+</button>
 
-            <div class="printer-id">
-                Printer ID: <strong id="printerId">PRINTER-1</strong>
-            </div>
+<button class="option" id="pdfBtn"
+onclick="selectType('pdf')">
+📑 PDF / Multiple Pages
+</button>
 
-            <div id="qrcode"></div>
-
-            <div class="qr-info">
-                इस QR को scan करने पर Printer 1 का print page खुलेगा।
-            </div>
-
-        </div>
-
-
-        <!-- DOCUMENT -->
-
-        <label>Select Document</label>
-
-        <input
-            type="file"
-            id="document"
-            accept=".pdf,.jpg,.jpeg,.png"
-        >
+</div>
 
 
-        <!-- PRINT TYPE -->
+<!-- SINGLE DOCUMENT -->
 
-        <label>Print Type</label>
+<div class="card" id="singleSection">
 
-        <select id="printType">
+<h2>📄 अपना कागज दें</h2>
 
-            <option value="bw">
-                Black & White
-            </option>
+<div class="upload-box">
 
-            <option value="color">
-                Color
-            </option>
+<div>
+📷 Camera से फोटो लें
+</div>
 
-        </select>
+<input
+type="file"
+id="singleCamera"
+accept="image/*"
+capture="environment"
+onchange="showPreview(this,'singlePreview','singleImage')">
 
-
-        <!-- COPIES -->
-
-        <label>Number of Copies</label>
-
-        <input
-            type="number"
-            id="copies"
-            value="1"
-            min="1"
-        >
+<label for="singleCamera" class="camera-btn">
+📷 फोटो खींचें
+</label>
 
 
-        <!-- CREATE ORDER -->
+<div>
+🖼️ या Gallery से चुनें
+</div>
 
-        <button onclick="createOrder()">
-            Create Print Order
-        </button>
+<input
+type="file"
+id="singleGallery"
+accept="image/*"
+onchange="showPreview(this,'singlePreview','singleImage')">
+
+<label for="singleGallery" class="gallery-btn">
+🖼️ फोटो चुनें
+</label>
+
+</div>
 
 
-        <!-- RESULT -->
+<div class="preview-box" id="singlePreview">
 
-        <div id="result"></div>
+<div class="preview-title">
+👀 आपकी फोटो
+</div>
 
-    </div>
+<img id="singleImage">
+
+<button class="back-btn"
+onclick="resetSingle()">
+🔄 दोबारा फोटो लें
+</button>
+
+</div>
+
+</div>
 
 
-    <div class="card">
+<!-- FRONT BACK -->
 
-        <strong>📌 Printer Information</strong>
+<div class="card hidden" id="frontBackSection">
 
-        <div class="small">
-            यह अभी पहला version है। QR से Printer 1 की पहचान होगी।
-            आगे इसी system में payment, online order और automatic
-            printer connection जोड़ा जाएगा।
-        </div>
+<h2>🪪 Front + Back</h2>
 
-    </div>
+<p>दोनों तरफ की फोटो दें। दोनों एक ही Paper पर लगेंगी।</p>
+
+<label>1️⃣ Front Side</label>
+
+<div class="upload-box">
+
+<input
+type="file"
+id="frontCamera"
+accept="image/*"
+capture="environment"
+onchange="showPreview(this,'frontPreview','frontImage')">
+
+<label for="frontCamera" class="camera-btn">
+📷 Front की फोटो खींचें
+</label>
+
+<input
+type="file"
+id="frontGallery"
+accept="image/*"
+onchange="showPreview(this,'frontPreview','frontImage')">
+
+<label for="frontGallery" class="gallery-btn">
+🖼️ Front की फोटो चुनें
+</label>
+
+</div>
+
+<div class="preview-box" id="frontPreview">
+<img id="frontImage">
+</div>
+
+
+<label>2️⃣ Back Side</label>
+
+<div class="upload-box">
+
+<input
+type="file"
+id="backCamera"
+accept="image/*"
+capture="environment"
+onchange="showPreview(this,'backPreview','backImage')">
+
+<label for="backCamera" class="camera-btn">
+📷 Back की फोटो खींचें
+</label>
+
+<input
+type="file"
+id="backGallery"
+accept="image/*"
+onchange="showPreview(this,'backPreview','backImage')">
+
+<label for="backGallery" class="gallery-btn">
+🖼️ Back की फोटो चुनें
+</label>
+
+</div>
+
+<div class="preview-box" id="backPreview">
+<img id="backImage">
+</div>
+
+</div>
+
+
+<!-- PDF -->
+
+<div class="card hidden" id="pdfSection">
+
+<h2>📑 PDF / Document</h2>
+
+<div class="upload-box">
+
+<input
+type="file"
+id="pdfFile"
+accept=".pdf,.jpg,.jpeg,.png"
+onchange="showPdfName(this)">
+
+<label for="pdfFile" class="gallery-btn">
+📁 PDF / Document चुनें
+</label>
+
+<div id="pdfName"></div>
+
+</div>
+
+</div>
+
+
+<!-- PRINT SETTINGS -->
+
+<div class="card">
+
+<h2>🖨️ Print Settings</h2>
+
+<label>रंग कैसा चाहिए?</label>
+
+<select id="printType">
+
+<option value="bw">
+⚫ Black & White
+</option>
+
+<option value="color">
+🌈 Color
+</option>
+
+</select>
+
+
+<label>कितनी Copy चाहिए?</label>
+
+<div class="qty">
+
+<button onclick="changeCopies(-1)">−</button>
+
+<input
+type="number"
+id="copies"
+value="1"
+min="1"
+readonly>
+
+<button onclick="changeCopies(1)">+</button>
+
+</div>
+
+
+<button class="main-btn"
+onclick="createOrder()">
+🟢 Print Order बनाएँ
+</button>
+
+<div id="result"></div>
+
+</div>
 
 </div>
 
 
 <script>
 
+/* -------------------------
+   DOCUMENT TYPE
+------------------------- */
 
-/* -------------------------------
-   PRINTER SYSTEM
--------------------------------- */
+let selectedType = "single";
 
-const params = new URLSearchParams(window.location.search);
+function selectType(type) {
 
-const printer = params.get("printer") || "1";
+    selectedType = type;
 
-document.getElementById("printerId").innerText =
-    "PRINTER-" + printer;
+    document.getElementById("singleSection")
+        .classList.toggle("hidden", type !== "single");
 
+    document.getElementById("frontBackSection")
+        .classList.toggle("hidden", type !== "frontback");
 
-/* -------------------------------
-   QR CODE
--------------------------------- */
+    document.getElementById("pdfSection")
+        .classList.toggle("hidden", type !== "pdf");
 
-const qrUrl =
-    window.location.origin +
-    window.location.pathname +
-    "?printer=" + printer;
+    document.getElementById("singleBtn")
+        .classList.toggle("active", type === "single");
 
-new QRCode(document.getElementById("qrcode"), {
+    document.getElementById("frontBackBtn")
+        .classList.toggle("active", type === "frontback");
 
-    text: qrUrl,
-
-    width: 180,
-
-    height: 180
-
-});
+    document.getElementById("pdfBtn")
+        .classList.toggle("active", type === "pdf");
+}
 
 
-/* -------------------------------
-   ORDER CREATION
--------------------------------- */
+/* -------------------------
+   IMAGE PREVIEW
+------------------------- */
+
+function showPreview(input, boxId, imageId) {
+
+    const file = input.files[0];
+
+    if (!file) return;
+
+    const image =
+        document.getElementById(imageId);
+
+    image.src = URL.createObjectURL(file);
+
+    document.getElementById(boxId)
+        .style.display = "block";
+}
+
+
+/* -------------------------
+   RESET SINGLE PHOTO
+------------------------- */
+
+function resetSingle() {
+
+    document.getElementById("singleCamera").value = "";
+    document.getElementById("singleGallery").value = "";
+
+    document.getElementById("singlePreview")
+        .style.display = "none";
+
+    document.getElementById("singleImage")
+        .src = "";
+}
+
+
+/* -------------------------
+   PDF NAME
+------------------------- */
+
+function showPdfName(input) {
+
+    const file = input.files[0];
+
+    if (!file) return;
+
+    document.getElementById("pdfName").innerHTML =
+        "<br>✅ चुनी गई file: <strong>" +
+        file.name +
+        "</strong>";
+}
+
+
+/* -------------------------
+   COPIES
+------------------------- */
+
+function changeCopies(amount) {
+
+    const input =
+        document.getElementById("copies");
+
+    let value =
+        parseInt(input.value) || 1;
+
+    value += amount;
+
+    if (value < 1) value = 1;
+
+    input.value = value;
+}
+
+
+/* -------------------------
+   CREATE ORDER
+------------------------- */
 
 function createOrder() {
 
-    const file =
-        document.getElementById("document").files[0];
+    let valid = false;
+
+    if (selectedType === "single") {
+
+        valid =
+            document.getElementById("singleCamera").files.length > 0 ||
+            document.getElementById("singleGallery").files.length > 0;
+    }
+
+    if (selectedType === "frontback") {
+
+        const front =
+            document.getElementById("frontCamera").files.length > 0 ||
+            document.getElementById("frontGallery").files.length > 0;
+
+        const back =
+            document.getElementById("backCamera").files.length > 0 ||
+            document.getElementById("backGallery").files.length > 0;
+
+        valid = front && back;
+    }
+
+    if (selectedType === "pdf") {
+
+        valid =
+            document.getElementById("pdfFile").files.length > 0;
+    }
+
+
+    if (!valid) {
+
+        alert("कृपया पहले अपना document/photo दें।");
+
+        return;
+    }
+
 
     const copies =
         document.getElementById("copies").value;
@@ -288,62 +591,46 @@ function createOrder() {
     const type =
         document.getElementById("printType").value;
 
-    const result =
-        document.getElementById("result");
-
-
-    if (!file) {
-
-        alert("Please select a document first.");
-
-        return;
-
-    }
-
-
-    if (copies < 1) {
-
-        alert("Copies कम से कम 1 होनी चाहिए।");
-
-        return;
-
-    }
-
-
-    /* CREATE ORDER ID */
-
     const orderId =
         "QP-" +
         Date.now().toString().slice(-8);
 
 
-    const printType =
-        type === "bw"
-        ? "Black & White"
-        : "Color";
+    let documentType = "";
 
+    if (selectedType === "single") {
+        documentType = "एक Document";
+    }
+
+    if (selectedType === "frontback") {
+        documentType = "Front + Back";
+    }
+
+    if (selectedType === "pdf") {
+        documentType = "PDF / Document";
+    }
+
+
+    const result =
+        document.getElementById("result");
 
     result.style.display = "block";
 
-
     result.innerHTML =
 
-        "<div class='order-id'>✅ Print Order Created</div>" +
-
-        "<br>" +
+        "<strong>✅ Print Order तैयार है</strong><br><br>" +
 
         "<strong>Order ID:</strong> " +
         orderId +
 
         "<br>" +
 
-        "<strong>Printer:</strong> " +
-        "PRINTER-" + printer +
+        "<strong>Printer:</strong> PRINTER-1" +
 
         "<br>" +
 
         "<strong>Document:</strong> " +
-        file.name +
+        documentType +
 
         "<br>" +
 
@@ -352,25 +639,18 @@ function createOrder() {
 
         "<br>" +
 
-        "<strong>Print Type:</strong> " +
-        printType +
+        "<strong>Print:</strong> " +
+        (type === "bw"
+            ? "Black & White"
+            : "Color") +
 
         "<br><br>" +
 
-        "🟢 Order received for Printer-" +
-        printer +
-
-        "<div class='small'>" +
-
-        "Payment और automatic printing अगले चरण में जोड़े जाएंगे।" +
-
-        "</div>";
+        "🟢 आपका order तैयार है।";
 
 }
-
 
 </script>
 
 </body>
-
 </html>
