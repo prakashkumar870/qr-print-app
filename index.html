@@ -1491,8 +1491,6 @@ function getPages(){
 
 function changeCopies(value){
 
-    const input =function changeCopies(value){
-
     const input =
     document.getElementById("copies");
 
@@ -1508,5 +1506,128 @@ function changeCopies(value){
     input.value = current;
 
     updatePrice();
+}
+
+
+/* =================================
+   PRICE
+================================= */
+
+function updatePrice(){
+
+    const pages = getPages();
+
+    const printType =
+    document.getElementById("printType").value;
+
+    const copies =
+    parseInt(
+        document.getElementById("copies").value,
+        10
+    ) || 1;
+
+    const rate =
+    printType === "color"
+    ? COLOR_RATE
+    : BW_RATE;
+
+    let totalSheets = 0;
+
+    if(
+        selectedType === "single" ||
+        selectedType === "frontback"
+    ){
+        totalSheets = pages * copies;
     }
-    
+
+    if(selectedType === "multiple"){
+        totalSheets = pages;
+    }
+
+    const total =
+    totalSheets * rate;
+
+    document.getElementById("totalPrice")
+    .innerText = total;
+
+    document.getElementById("priceDetails")
+    .innerText =
+    totalSheets +
+    " Sheet × ₹" +
+    rate;
+}
+
+
+/* =================================
+   CREATE ORDER
+================================= */
+
+function createOrder(){
+
+    const pages = getPages();
+
+    if(selectedType === "single" && !singleFile){
+
+        alert("पहले Document की फोटो दें।");
+        return;
+    }
+
+    if(
+        selectedType === "frontback" &&
+        (!frontFile || !backFile)
+    ){
+
+        alert("Front और Back दोनों की फोटो दें।");
+        return;
+    }
+
+    if(
+        selectedType === "multiple" &&
+        pages === 0
+    ){
+
+        alert("पहले PDF या Pages जोड़ें।");
+        return;
+    }
+
+    const orderId =
+    "QR" +
+    Date.now().toString().slice(-6);
+
+    const printType =
+    document.getElementById("printType").value;
+
+    const copies =
+    parseInt(
+        document.getElementById("copies").value,
+        10
+    ) || 1;
+
+    const rate =
+    printType === "color"
+    ? COLOR_RATE
+    : BW_RATE;
+
+    let sheets;
+
+    if(selectedType === "multiple"){
+        sheets = pages;
+    }else{
+        sheets = pages * copies;
+    }
+
+    const total =
+    sheets * rate;
+
+    document.getElementById("result")
+    .style.display = "block";
+
+    document.getElementById("result")
+    .innerHTML =
+    "<strong>✅ Print Order तैयार है</strong><br><br>" +
+    "Order ID: <strong>" + orderId + "</strong><br>" +
+    "Printer: <strong>PRINTER-" + printerNumber + "</strong><br>" +
+    "Sheets: <strong>" + sheets + "</strong><br>" +
+    "कुल कीमत: <strong>₹" + total + "</strong>";
+
+    }
