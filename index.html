@@ -91,6 +91,59 @@ h2{
     border-radius:12px;
     color:#555;
     line-height:1.5;
+}.upload-box{
+    border:2px dashed #bbb;
+    border-radius:16px;
+    padding:16px;
+    text-align:center;
+    margin-top:12px;
+}
+
+input[type="file"]{
+    display:none;
+}
+
+.upload-btn{
+    display:block;
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border-radius:13px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    text-align:center;
+}
+
+.camera-btn{
+    background:#111827;
+    color:white;
+}
+
+.gallery-btn{
+    background:#e5e7eb;
+    color:#222;
+}
+
+.preview-box{
+    display:none;
+    margin-top:18px;
+    text-align:center;
+}
+
+.preview-title{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.preview-box button{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:12px;
+    background:#e5e7eb;
+    font-size:15px;
+    font-weight:bold;
 }
 
 </style>
@@ -165,13 +218,66 @@ class="card section active">
 
 <h2>📄 एक कागज / Document</h2>
 
-<div class="info">
+<div class="upload-box">
 
-यहाँ Document की फोटो या PDF बाद में जोड़ी जाएगी।
+<strong>Document की फोटो दें</strong>
 
-<br><br>
+<input
+type="file"
+id="cameraInput"
+accept="image/*"
+capture="environment"
+onchange="showDocument(this)"
+>
 
-अभी हम सिर्फ Button System test कर रहे हैं।
+<label
+for="cameraInput"
+class="upload-btn camera-btn">
+
+📷 Camera से फोटो खींचें
+
+</label>
+
+
+<input
+type="file"
+id="galleryInput"
+accept="image/*"
+onchange="showDocument(this)"
+>
+
+<label
+for="galleryInput"
+class="upload-btn gallery-btn">
+
+🖼️ Gallery से फोटो चुनें
+
+</label>
+
+</div>
+
+
+<div
+id="documentPreview"
+class="preview-box">
+
+<div class="preview-title">
+👀 Document Preview
+</div>
+
+<img
+id="documentImage"
+style="width:100%;max-height:350px;object-fit:contain;border-radius:12px;"
+>
+
+<button
+type="button"
+onclick="resetDocument()"
+style="margin-top:10px;">
+
+🔄 दोबारा फोटो लें / बदलें
+
+</button>
 
 </div>
 
@@ -293,6 +399,43 @@ function selectType(type){
 
     }
 
+}let documentFile = null;
+
+function showDocument(input){
+
+    const file = input.files[0];
+
+    if(!file){
+        return;
+    }
+
+    documentFile = file;
+
+    const image =
+    document.getElementById("documentImage");
+
+    image.src =
+    URL.createObjectURL(file);
+
+    document
+    .getElementById("documentPreview")
+    .style.display = "block";
+
+    input.value = "";
+}
+
+
+function resetDocument(){
+
+    documentFile = null;
+
+    document
+    .getElementById("documentImage")
+    .src = "";
+
+    document
+    .getElementById("documentPreview")
+    .style.display = "none";
 }
 
 </script>
