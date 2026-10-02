@@ -44,6 +44,10 @@ h2{
     margin:5px 0 15px;
 }
 
+h3{
+    margin-top:22px;
+}
+
 .subtitle{
     text-align:center;
     color:#666;
@@ -53,12 +57,12 @@ h2{
 .printer-info{
     text-align:center;
     background:#eef7ff;
-    padding:12px;
+    padding:13px;
     border-radius:12px;
     margin-bottom:18px;
 }
 
-/* TOP OPTIONS */
+/* OPTIONS */
 
 .option{
     display:block;
@@ -75,8 +79,6 @@ h2{
     text-align:left;
     cursor:pointer;
     touch-action:manipulation;
-    position:relative;
-    z-index:10;
 }
 
 .option:active{
@@ -166,7 +168,7 @@ input[type="file"]{
 
 /* SETTINGS */
 
-label.setting-label{
+.setting-label{
     display:block;
     font-weight:bold;
     margin:18px 0 8px;
@@ -197,6 +199,7 @@ select{
     background:#e5e7eb;
     font-size:26px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .copy-row input{
@@ -240,6 +243,10 @@ select{
     margin:5px 0;
 }
 
+#priceDetails{
+    color:#555;
+}
+
 /* MAIN BUTTON */
 
 .main-btn{
@@ -252,6 +259,7 @@ select{
     color:white;
     font-size:17px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 /* RESULT */
@@ -304,6 +312,7 @@ select{
     background:#fee2e2;
     color:#b91c1c;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .pdf-preview{
@@ -322,6 +331,12 @@ select{
 .small-text{
     color:#666;
     font-size:14px;
+    margin-top:8px;
+}
+
+.success{
+    color:#166534;
+    font-weight:bold;
 }
 
 </style>
@@ -331,9 +346,7 @@ select{
 
 <div class="app">
 
-<!-- =========================
-     HEADER
-========================= -->
+<!-- HEADER -->
 
 <div class="card">
 
@@ -389,13 +402,9 @@ onclick="selectType('multiple')">
 </div>
 
 
-<!-- =========================
-     DOCUMENT
-========================= -->
+<!-- DOCUMENT -->
 
-<div
-class="card"
-id="singleSection">
+<div class="card" id="singleSection">
 
 <h2>📄 अपना कागज दें</h2>
 
@@ -408,7 +417,8 @@ type="file"
 id="singleCamera"
 accept="image/*"
 capture="environment"
-onchange="selectSingleFile(this)">
+onchange="selectSingleFile(this)"
+>
 
 <label
 for="singleCamera"
@@ -423,7 +433,8 @@ class="upload-btn camera-btn">
 type="file"
 id="singleGallery"
 accept="image/*"
-onchange="selectSingleFile(this)">
+onchange="selectSingleFile(this)"
+>
 
 <label
 for="singleGallery"
@@ -464,16 +475,14 @@ onclick="resetSingle()">
 
 <br>
 
-अगर 2 या 3 Sheets चाहिए तो नीचे संख्या चुनें।
+नीचे से जितनी Sheets / Copies चाहिए उतनी संख्या चुनें।
 
 </div>
 
 </div>
 
 
-<!-- =========================
-     FRONT BACK
-========================= -->
+<!-- FRONT BACK -->
 
 <div
 class="card hidden"
@@ -497,7 +506,8 @@ type="file"
 id="frontCamera"
 accept="image/*"
 capture="environment"
-onchange="selectFrontFile(this)">
+onchange="selectFrontFile(this)"
+>
 
 <label
 for="frontCamera"
@@ -512,7 +522,8 @@ class="upload-btn camera-btn">
 type="file"
 id="frontGallery"
 accept="image/*"
-onchange="selectFrontFile(this)">
+onchange="selectFrontFile(this)"
+>
 
 <label
 for="frontGallery"
@@ -556,7 +567,8 @@ type="file"
 id="backCamera"
 accept="image/*"
 capture="environment"
-onchange="selectBackFile(this)">
+onchange="selectBackFile(this)"
+>
 
 <label
 for="backCamera"
@@ -571,7 +583,8 @@ class="upload-btn camera-btn">
 type="file"
 id="backGallery"
 accept="image/*"
-onchange="selectBackFile(this)">
+onchange="selectBackFile(this)"
+>
 
 <label
 for="backGallery"
@@ -612,16 +625,14 @@ onclick="resetBack()">
 
 <br>
 
-नीचे से जितनी Sheets चाहिए उतनी संख्या चुनें।
+नीचे से जितनी Sheets / Copies चाहिए उतनी संख्या चुनें।
 
 </div>
 
 </div>
 
 
-<!-- =========================
-     MULTIPLE
-========================= -->
+<!-- MULTIPLE -->
 
 <div
 class="card hidden"
@@ -637,6 +648,10 @@ PDF में जितने Pages होंगे, उतनी ही Sheets 
 
 उदाहरण: 7 Page PDF = 7 Sheets
 
+<br><br>
+
+📌 Multiple में अलग से Copies नहीं चुननी हैं।
+
 </div>
 
 
@@ -650,7 +665,8 @@ PDF में जितने Pages होंगे, उतनी ही Sheets 
 type="file"
 id="pdfFile"
 accept=".pdf,application/pdf"
-onchange="selectPDF(this)">
+onchange="selectPDF(this)"
+>
 
 <label
 for="pdfFile"
@@ -704,7 +720,8 @@ type="file"
 id="multipleCamera"
 accept="image/*"
 capture="environment"
-onchange="addCameraPage(this)">
+onchange="addCameraPage(this)"
+>
 
 <label
 for="multipleCamera"
@@ -719,7 +736,8 @@ class="upload-btn camera-btn">
 type="file"
 id="multipleGallery"
 accept="image/*"
-onchange="addGalleryPage(this)">
+onchange="addGalleryPage(this)"
+>
 
 <label
 for="multipleGallery"
@@ -750,21 +768,19 @@ id="imageCount">
 </div>
 
 
-<!-- =========================
-     PRINT SETTINGS
-========================= -->
+<!-- PRINT SETTINGS -->
 
 <div class="card">
 
 <h2>🖨️ Print Setting</h2>
 
 
-<label
-class="setting-label">
+<label class="setting-label">
 
 रंग कैसा चाहिए?
 
 </label>
+
 
 <select
 id="printType"
@@ -783,11 +799,9 @@ onchange="updatePrice()">
 
 <!-- COPIES -->
 
-<div
-id="copySection">
+<div id="copySection">
 
-<label
-class="setting-label">
+<label class="setting-label">
 
 कितनी Sheet / Copy चाहिए?
 
@@ -798,7 +812,9 @@ class="setting-label">
 <button
 type="button"
 onclick="changeCopies(-1)">
+
 −
+
 </button>
 
 <input
@@ -806,19 +822,22 @@ type="number"
 id="copies"
 value="1"
 min="1"
-readonly>
+readonly
+>
 
 <button
 type="button"
 onclick="changeCopies(1)">
+
 +
+
 </button>
 
 </div>
 
 <div class="info">
 
-ℹ️ दूसरी Copy के लिए नया Document Upload करना जरूरी नहीं है।
+ℹ️ Document और Front + Back में Copies चुन सकते हैं।
 
 </div>
 
@@ -890,7 +909,6 @@ onclick="createOrder()">
 ================================= */
 
 const BW_RATE = 2;
-
 const COLOR_RATE = 5;
 
 
@@ -901,9 +919,7 @@ const COLOR_RATE = 5;
 let selectedType = "single";
 
 let singleFile = null;
-
 let frontFile = null;
-
 let backFile = null;
 
 let multipleImages = [];
@@ -921,12 +937,10 @@ new URLSearchParams(window.location.search);
 const printerNumber =
 urlParams.get("printer") || "1";
 
-document.getElementById("printerName")
-.innerText =
+document.getElementById("printerName").innerText =
 "Printer " + printerNumber;
 
-document.getElementById("printerId")
-.innerText =
+document.getElementById("printerId").innerText =
 "PRINTER-" + printerNumber;
 
 
@@ -938,114 +952,87 @@ function selectType(type){
 
     selectedType = type;
 
-    const single =
+    const singleSection =
     document.getElementById("singleSection");
 
-    const frontBack =
+    const frontBackSection =
     document.getElementById("frontBackSection");
 
-    const multiple =
+    const multipleSection =
     document.getElementById("multipleSection");
 
+    const singleBtn =
+    document.getElementById("singleBtn");
 
-    single.classList.add("hidden");
+    const frontBackBtn =
+    document.getElementById("frontBackBtn");
 
-    frontBack.classList.add("hidden");
+    const multipleBtn =
+    document.getElementById("multipleBtn");
 
-    multiple.classList.add("hidden");
+    const copySection =
+    document.getElementById("copySection");
+
+    const multipleCopyInfo =
+    document.getElementById("multipleCopyInfo");
+
+
+    singleSection.classList.add("hidden");
+    frontBackSection.classList.add("hidden");
+    multipleSection.classList.add("hidden");
+
+
+    singleBtn.classList.remove("active");
+    frontBackBtn.classList.remove("active");
+    multipleBtn.classList.remove("active");
 
 
     if(type === "single"){
 
-        single.classList.remove("hidden");
+        singleSection.classList.remove("hidden");
+        singleBtn.classList.add("active");
 
     }
 
 
     if(type === "frontback"){
 
-        frontBack.classList.remove("hidden");
+        frontBackSection.classList.remove("hidden");
+        frontBackBtn.classList.add("active");
 
     }
 
 
     if(type === "multiple"){
 
-        multiple.classList.remove("hidden");
-
-    }
-
-
-    document
-    .getElementById("singleBtn")
-    .classList.remove("active");
-
-    document
-    .getElementById("frontBackBtn")
-    .classList.remove("active");
-
-    document
-    .getElementById("multipleBtn")
-    .classList.remove("active");
-
-
-    if(type === "single"){
-
-        document
-        .getElementById("singleBtn")
-        .classList.add("active");
-
-    }
-
-
-    if(type === "frontback"){
-
-        document
-        .getElementById("frontBackBtn")
-        .classList.add("active");
-
-    }
-
-
-    if(type === "multiple"){
-
-        document
-        .getElementById("multipleBtn")
-        .classList.add("active");
+        multipleSection.classList.remove("hidden");
+        multipleBtn.classList.add("active");
 
     }
 
 
     /* Copies only for Single + Front Back */
 
-    const copySection =
-    document.getElementById("copySection");
-
-    const multipleInfo =
-    document.getElementById("multipleCopyInfo");
-
-
     if(type === "multiple"){
 
         copySection.classList.add("hidden");
-
-        multipleInfo.classList.remove("hidden");
+        multipleCopyInfo.classList.remove("hidden");
 
     }else{
 
         copySection.classList.remove("hidden");
-
-        multipleInfo.classList.add("hidden");
+        multipleCopyInfo.classList.add("hidden");
 
     }
 
 
     updatePrice();
+
 }
 
 
 /* =================================
-   SINGLE
+   SINGLE DOCUMENT
 ================================= */
 
 function selectSingleFile(input){
@@ -1071,6 +1058,7 @@ function selectSingleFile(input){
     input.value = "";
 
     updatePrice();
+
 }
 
 
@@ -1087,6 +1075,7 @@ function resetSingle(){
     .style.display = "none";
 
     updatePrice();
+
 }
 
 
@@ -1116,6 +1105,7 @@ function selectFrontFile(input){
     input.value = "";
 
     updatePrice();
+
 }
 
 
@@ -1132,6 +1122,7 @@ function resetFront(){
     .style.display = "none";
 
     updatePrice();
+
 }
 
 
@@ -1161,6 +1152,7 @@ function selectBackFile(input){
     input.value = "";
 
     updatePrice();
+
 }
 
 
@@ -1177,155 +1169,32 @@ function resetBack(){
     .style.display = "none";
 
     updatePrice();
+
 }
 
 
 /* =================================
-   MULTIPLE CAMERA
+   COPIES
 ================================= */
 
-function addCameraPage(input){
+function changeCopies(value){
 
-    const file = input.files[0];
+    const input =
+    document.getElementById("copies");
 
-    if(!file){
-        return;
+    let current =
+    parseInt(input.value) || 1;
+
+    current += value;
+
+    if(current < 1){
+        current = 1;
     }
 
-    multipleImages.push(file);
-
-    renderMultipleImages();
-
-    input.value = "";
+    input.value = current;
 
     updatePrice();
-}
 
-
-/* =================================
-   MULTIPLE GALLERY
-================================= */
-
-function addGalleryPage(input){
-
-    const file = input.files[0];
-
-    if(!file){
-        return;
-    }
-
-    multipleImages.push(file);
-
-    renderMultipleImages();
-
-    input.value = "";
-
-    updatePrice();
-}
-
-
-/* =================================
-   SHOW MULTIPLE IMAGES
-================================= */
-
-function renderMultipleImages(){
-
-    const list =
-    document.getElementById(
-        "multipleImageList"
-    );
-
-    list.innerHTML = "";
-
-
-    multipleImages.forEach(
-    function(file,index){
-
-        const box =
-        document.createElement("div");
-
-        box.className =
-        "page-item";
-
-
-        const title =
-        document.createElement("strong");
-
-        title.innerText =
-        "📄 Page " + (index + 1);
-
-
-        const img =
-        document.createElement("img");
-
-        img.src =
-        URL.createObjectURL(file);
-
-
-        const remove =
-        document.createElement("button");
-
-        remove.type = "button";
-
-        remove.className =
-        "remove-page";
-
-        remove.innerText =
-        "❌ यह Page हटाएँ";
-
-
-        remove.onclick =
-        function(){
-
-            multipleImages.splice(
-                index,
-                1
-            );
-
-            renderMultipleImages();
-
-            updatePrice();
-        };
-
-
-        box.appendChild(title);
-
-        box.appendChild(img);
-
-        box.appendChild(remove);
-
-        list.appendChild(box);
-
-    });
-
-
-    const count =
-    multipleImages.length;
-
-
-    const countBox =
-    document.getElementById(
-        "imageCount"
-    );
-
-
-    if(count > 0){
-
-        countBox.style.display =
-        "block";
-
-    }else{
-
-        countBox.style.display =
-        "none";
-
-    }
-
-
-    document
-    .getElementById("imagePages")
-    .innerText =
-    count;
 }
 
 
@@ -1341,25 +1210,21 @@ async function selectPDF(input){
         return;
     }
 
+    document
+    .getElementById("pdfName")
+    .innerText =
+    "Selected: " + file.name;
+
 
     try{
 
-        document
-        .getElementById("pdfName")
-        .innerHTML =
-        "<br>✅ " + file.name;
-
-
-        const buffer =
+        const arrayBuffer =
         await file.arrayBuffer();
 
-
         const pdf =
-        await pdfjsLib
-        .getDocument({
-            data:buffer
-        })
-        .promise;
+        await pdfjsLib.getDocument({
+            data: arrayBuffer
+        }).promise;
 
 
         pdfPageTotal =
@@ -1378,31 +1243,24 @@ async function selectPDF(input){
         "block";
 
 
-        /* Preview first page */
+        /* First page preview */
 
         const page =
         await pdf.getPage(1);
-
 
         const viewport =
         page.getViewport({
             scale:1.2
         });
 
-
         const canvas =
-        document.getElementById(
-            "pdfCanvas"
-        );
-
+        document.getElementById("pdfCanvas");
 
         const context =
         canvas.getContext("2d");
 
-
         canvas.width =
         viewport.width;
-
 
         canvas.height =
         viewport.height;
@@ -1420,214 +1278,197 @@ async function selectPDF(input){
         "block";
 
 
+        /* PDF and camera pages are alternatives */
+
+        multipleImages = [];
+
+        document
+        .getElementById("multipleImageList")
+        .innerHTML = "";
+
+        document
+        .getElementById("imageCount")
+        .style.display = "none";
+
+
         updatePrice();
 
     }catch(error){
 
+        console.error(error);
+
         alert(
-            "PDF पढ़ने में समस्या हुई। दूसरी PDF चुनें।"
+            "PDF पढ़ने में समस्या हुई। कृपया दूसरा PDF चुनें।"
         );
 
         pdfPageTotal = 0;
 
-        updatePrice();
     }
 
-
-    input.value = "";
 }
 
 
 /* =================================
-   PAGE COUNT
+   MULTIPLE IMAGE PAGE
+================================= */
+
+function addCameraPage(input){
+
+    addMultipleImage(input);
+
+}
+
+
+function addGalleryPage(input){
+
+    addMultipleImage(input);
+
+}
+
+
+function addMultipleImage(input){
+
+    const file = input.files[0];
+
+    if(!file){
+        return;
+    }
+
+
+    /* अगर PDF पहले से selected है */
+
+    if(pdfPageTotal > 0){
+
+        alert(
+            "PDF पहले से चुना गया है। PDF हटाकर Camera/Gallery Pages इस्तेमाल करें।"
+        );
+
+        input.value = "";
+
+        return;
+    }
+
+
+    multipleImages.push(file);
+
+    renderMultipleImages();
+
+    input.value = "";
+
+    updatePrice();
+
+}
+
+
+function renderMultipleImages(){
+
+    const list =
+    document.getElementById("multipleImageList");
+
+    list.innerHTML = "";
+
+
+    multipleImages.forEach(
+        (file,index) => {
+
+            const item =
+            document.createElement("div");
+
+            item.className =
+            "page-item";
+
+
+            const title =
+            document.createElement("div");
+
+            title.innerHTML =
+            "<strong>Page " +
+            (index + 1) +
+            "</strong>";
+
+
+            const img =
+            document.createElement("img");
+
+            img.src =
+            URL.createObjectURL(file);
+
+
+            const remove =
+            document.createElement("button");
+
+            remove.type =
+            "button";
+
+            remove.className =
+            "remove-page";
+
+            remove.innerText =
+            "🗑️ यह Page हटाएँ";
+
+
+            remove.onclick =
+            function(){
+
+                multipleImages.splice(
+                    index,
+                    1
+                );
+
+                renderMultipleImages();
+
+                updatePrice();
+
+            };
+
+
+            item.appendChild(title);
+
+            item.appendChild(img);
+
+            item.appendChild(remove);
+
+            list.appendChild(item);
+
+        }
+    );
+
+
+    const count =
+    multipleImages.length;
+
+
+    document
+    .getElementById("imagePages")
+    .innerText =
+    count;
+
+
+    document
+    .getElementById("imageCount")
+    .style.display =
+    count > 0
+    ? "block"
+    : "none";
+
+}
+
+
+/* =================================
+   GET PAGE COUNT
 ================================= */
 
 function getPages(){
 
     if(selectedType === "single"){
 
-        if(!singleFile){
-            return 0;
-        }
+        return singleFile
+        ? 1
+        : 0;
 
-        return 1;
     }
 
 
     if(selectedType === "frontback"){
 
-        if(
-            frontFile &&
-            backFile
-        ){
-
-            return 1;
-
-        }
-
-        return 0;
-    }
-
-
-    if(selectedType === "multiple"){
-
-        if(pdfPageTotal > 0){
-
-            return pdfPageTotal;
-
-        }
-
-        return multipleImages.length;
-    }
-
-
-    return 0;
-}
-
-
-/* =================================
-   COPIES
-================================= */
-
-function changeCopies(value){
-
-    const input =
-    document.getElementById("copies");
-
-    let current =
-    parseInt(input.value, 10) || 1;
-
-    current = current + value;
-
-    if(current < 1){
-        current = 1;
-    }
-
-    input.value = current;
-
-    updatePrice();
-}
-
-
-/* =================================
-   PRICE
-================================= */
-
-function updatePrice(){
-
-    const pages = getPages();
-
-    const printType =
-    document.getElementById("printType").value;
-
-    const copies =
-    parseInt(
-        document.getElementById("copies").value,
-        10
-    ) || 1;
-
-    const rate =
-    printType === "color"
-    ? COLOR_RATE
-    : BW_RATE;
-
-    let totalSheets = 0;
-
-    if(
-        selectedType === "single" ||
-        selectedType === "frontback"
-    ){
-        totalSheets = pages * copies;
-    }
-
-    if(selectedType === "multiple"){
-        totalSheets = pages;
-    }
-
-    const total =
-    totalSheets * rate;
-
-    document.getElementById("totalPrice")
-    .innerText = total;
-
-    document.getElementById("priceDetails")
-    .innerText =
-    totalSheets +
-    " Sheet × ₹" +
-    rate;
-}
-
-
-/* =================================
-   CREATE ORDER
-================================= */
-
-function createOrder(){
-
-    const pages = getPages();
-
-    if(selectedType === "single" && !singleFile){
-
-        alert("पहले Document की फोटो दें।");
-        return;
-    }
-
-    if(
-        selectedType === "frontback" &&
-        (!frontFile || !backFile)
-    ){
-
-        alert("Front और Back दोनों की फोटो दें।");
-        return;
-    }
-
-    if(
-        selectedType === "multiple" &&
-        pages === 0
-    ){
-
-        alert("पहले PDF या Pages जोड़ें।");
-        return;
-    }
-
-    const orderId =
-    "QR" +
-    Date.now().toString().slice(-6);
-
-    const printType =
-    document.getElementById("printType").value;
-
-    const copies =
-    parseInt(
-        document.getElementById("copies").value,
-        10
-    ) || 1;
-
-    const rate =
-    printType === "color"
-    ? COLOR_RATE
-    : BW_RATE;
-
-    let sheets;
-
-    if(selectedType === "multiple"){
-        sheets = pages;
-    }else{
-        sheets = pages * copies;
-    }
-
-    const total =
-    sheets * rate;
-
-    document.getElementById("result")
-    .style.display = "block";
-
-    document.getElementById("result")
-    .innerHTML =
-    "<strong>✅ Print Order तैयार है</strong><br><br>" +
-    "Order ID: <strong>" + orderId + "</strong><br>" +
-    "Printer: <strong>PRINTER-" + printerNumber + "</strong><br>" +
-    "Sheets: <strong>" + sheets + "</strong><br>" +
-    "कुल कीमत: <strong>₹" + total + "</strong>";
-
-    }
+    
